@@ -181,6 +181,32 @@ function AuthPage({ mode }) {
               {busy ? "Please wait…" : mode === "login" ? "Sign in →" : "Create account →"}
             </button>
           </form>
+
+          {mode === "login" && (
+            <div className="demo-credentials">
+              <h4>Demo Credentials</h4>
+              <p>Use these accounts to explore StaffSync.</p>
+
+              <div className="demo-account">
+                <strong>HR</strong>
+                <div>Email: hr@staffsync.com</div>
+                <div>Password: password123</div>
+              </div>
+
+              <div className="demo-account">
+                <strong>Manager</strong>
+                <div>Email: manager@staffsync.com</div>
+                <div>Password: password123</div>
+              </div>
+
+              <div className="demo-account">
+                <strong>Employee</strong>
+                <div>Email: employee@staffsync.com</div>
+                <div>Password: password123</div>
+              </div>
+            </div>
+          )}
+
           <p className="switch-auth">
             {mode === "login" ? "New to StaffSync?" : "Already have an account?"}{" "}
             <button onClick={() => navigate(mode === "login" ? "/register" : "/login")}>
@@ -230,25 +256,24 @@ function Dashboard() {
   const stats =
     user.role === "employee"
       ? [
-          ["My leave requests", counts.leaves.length, "Requests submitted", "violet"],
-          ["Pending approvals", pending, "Awaiting a decision", "amber"],
-          ["Attendance records", counts.attendance.length, "Your recorded days", "green"],
-          ["Training programs", counts.trainings.length, "Available to explore", "blue"]
-        ]
+        ["My leave requests", counts.leaves.length, "Requests submitted", "violet"],
+        ["Pending approvals", pending, "Awaiting a decision", "amber"],
+        ["Attendance records", counts.attendance.length, "Your recorded days", "green"],
+        ["Training programs", counts.trainings.length, "Available to explore", "blue"]
+      ]
       : [
-          ["Team members", counts.employees.length, "People in directory", "violet"],
-          ["Pending leaves", pending, "Need review", "amber"],
-          ["Attendance records", counts.attendance.length, "Recent records", "green"],
-          ["Announcements", counts.announcements.length, "Published updates", "blue"]
-        ];
+        ["Team members", counts.employees.length, "People in directory", "violet"],
+        ["Pending leaves", pending, "Need review", "amber"],
+        ["Attendance records", counts.attendance.length, "Recent records", "green"],
+        ["Announcements", counts.announcements.length, "Published updates", "blue"]
+      ];
 
   return (
     <>
       <PageHeading
         kicker={`${user?.role?.toUpperCase() || "USER"} OVERVIEW`}
-        title={`Good ${
-          new Date().getHours() < 12 ? "morning" : new Date().getHours() < 17 ? "afternoon" : "evening"
-        }, ${user?.name ? user.name.split(" ")[0] : "there"}.`}
+        title={`Good ${new Date().getHours() < 12 ? "morning" : new Date().getHours() < 17 ? "afternoon" : "evening"
+          }, ${user?.name ? user.name.split(" ")[0] : "there"}.`}
         subtitle="Here's what's happening across your workspace today."
         action={
           <span className="date-chip">
