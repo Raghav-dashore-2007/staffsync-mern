@@ -31,12 +31,6 @@ app.use("/api/announcements", announcementRoutes);
 app.use("/api/trainings", trainingRoutes);
 
 // Serve static frontend in production
-app.use(express.static(clientDistPath));
-app.get("*", (req, res, next) => {
-  if (req.path.startsWith("/api")) return next();
-  res.sendFile(path.join(clientDistPath, "index.html"));
-});
-
 app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(err.status || 500).json({ message: err.message || "Server error" });
